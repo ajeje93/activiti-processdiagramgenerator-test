@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.activiti.bpmn.BpmnAutoLayout;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.EndEvent;
-import org.activiti.bpmn.model.GraphicInfo;
 import org.activiti.bpmn.model.Process;
 import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.bpmn.model.StartEvent;
@@ -71,51 +71,8 @@ public class Test {
 		// add the process to the model
 		model.addProcess(p);
 		
-		// add graphic info
-		GraphicInfo startEventGraphicInfo = new GraphicInfo();
-		startEventGraphicInfo.setX(70.0);
-		startEventGraphicInfo.setY(170.0);
-		startEventGraphicInfo.setHeight(35.0);
-		startEventGraphicInfo.setWidth(35.0);
-		model.addGraphicInfo("start", startEventGraphicInfo);
-		
-		GraphicInfo task1GraphicInfo = new GraphicInfo();
-		task1GraphicInfo.setX(180.0);
-		task1GraphicInfo.setY(160.0);
-		task1GraphicInfo.setHeight(55.0);
-		task1GraphicInfo.setWidth(105.0);
-		model.addGraphicInfo("task1", task1GraphicInfo);
-		
-		GraphicInfo endEventGraphicInfo = new GraphicInfo();
-		endEventGraphicInfo.setX(370.0);
-		endEventGraphicInfo.setY(170.0);
-		endEventGraphicInfo.setHeight(35.0);
-		endEventGraphicInfo.setWidth(35.0);
-		model.addGraphicInfo("end", endEventGraphicInfo);
-		
-		// add flow graphic info
-		List<GraphicInfo> flow1GraphicInfoList = new ArrayList<GraphicInfo>();
-		GraphicInfo point1 = new GraphicInfo();
-		point1.setX(105.0);
-		point1.setY(187.0);
-		flow1GraphicInfoList.add(point1);
-		GraphicInfo point2 = new GraphicInfo();
-		point2.setX(180.0);
-		point2.setY(187.0);
-		flow1GraphicInfoList.add(point2);
-		model.addFlowGraphicInfoList("flow1", flow1GraphicInfoList);
-		
-		List<GraphicInfo> flow2GraphicInfoList = new ArrayList<GraphicInfo>();
-		point1 = new GraphicInfo();
-		point1.setX(285.0);
-		point1.setY(187.0);
-		flow2GraphicInfoList.add(point1);
-		point2 = new GraphicInfo();
-		point2.setX(370.0);
-		point2.setY(187.0);
-		flow2GraphicInfoList.add(point2);
-		model.addFlowGraphicInfoList("flow2", flow2GraphicInfoList);
-
+		// Add auto layout
+		new BpmnAutoLayout(model).execute();
 
 		// write the file
 		FileUtils.copyInputStreamToFile(cfg.getProcessDiagramGenerator().generatePngDiagram(model),
